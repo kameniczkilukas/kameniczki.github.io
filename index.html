@@ -440,7 +440,103 @@ footer {
   .nav-links { display: none; }
   .cta-box { padding: 48px 24px; }
   .cta-actions { flex-direction: column; align-items: center; }
+  .contact-box { grid-template-columns: 1fr; }
+  .install-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Language switcher ── */
+.lang-switcher { position: relative; }
+.lang-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  color: var(--text-mid); padding: 7px 12px; border-radius: 8px;
+  font-size: 12px; font-weight: 600; font-family: var(--mono);
+  cursor: pointer; transition: all 0.2s;
+}
+.lang-btn:hover { border-color: var(--green); color: var(--text); }
+.lang-dropdown {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 10px; overflow: hidden; min-width: 150px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 200;
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 10px 16px; background: none; border: none;
+  color: var(--text-mid); font-size: 13px; font-family: var(--sans);
+  cursor: pointer; transition: all 0.15s; text-align: left;
+}
+.lang-option:hover { background: var(--bg3); color: var(--text); }
+.lang-option.active { color: var(--green); }
+.install-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden;
+}
+.install-step {
+  background: var(--bg2); padding: 28px 28px;
+  display: flex; gap: 18px; align-items: flex-start;
+  transition: background 0.2s;
+}
+.install-step:hover { background: var(--bg3); }
+.install-num {
+  font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--green);
+  background: var(--green-dim); border: 1px solid rgba(34,197,94,0.25);
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.install-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.install-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+.install-desc code {
+  font-family: var(--mono); font-size: 11px; background: var(--bg4);
+  padding: 1px 6px; border-radius: 4px; color: var(--green);
+}
+.install-desc strong { color: var(--text); }
+.install-dl-btn {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 14px;
+  background: var(--green); color: #fff; padding: 9px 18px; border-radius: 8px;
+  font-size: 12px; font-weight: 700; text-decoration: none; font-family: var(--sans);
+  transition: all 0.2s;
+}
+.install-dl-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+.install-note {
+  display: flex; align-items: flex-start; gap: 10px; margin-top: 20px;
+  background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+  padding: 14px 18px; border-radius: 10px;
+  font-size: 12px; color: #d97706; font-family: var(--mono); line-height: 1.6;
+}
+.install-note svg { flex-shrink: 0; margin-top: 1px; }
+
+/* ── Contact ── */
+.contact-box {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 24px; padding: 56px;
+}
+.contact-email-btn {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 24px;
+  color: var(--green); font-family: var(--mono); font-size: 13px; font-weight: 600;
+  text-decoration: none; background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2);
+  padding: 12px 20px; border-radius: 10px; transition: all 0.2s;
+}
+.contact-email-btn:hover { background: rgba(34,197,94,0.18); transform: translateY(-1px); }
+.contact-form { display: flex; flex-direction: column; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-input {
+  background: var(--bg3); border: 1px solid var(--border2); color: var(--text);
+  padding: 12px 16px; border-radius: 10px; font-size: 13px; font-family: var(--sans);
+  outline: none; transition: border-color 0.2s; width: 100%;
+}
+.form-input:focus { border-color: var(--green); }
+.form-input::placeholder { color: var(--text-muted); }
+.form-textarea { min-height: 120px; resize: vertical; }
+.form-btn {
+  background: var(--green); color: #fff; border: none;
+  padding: 13px 24px; border-radius: 10px; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: var(--sans); display: flex; align-items: center;
+  gap: 8px; justify-content: center; transition: all 0.2s; width: 100%;
+}
+.form-btn:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 6px 20px var(--green-glow); }
 </style>
 </head>
 <body>
@@ -459,14 +555,28 @@ footer {
         <div class="nav-logo-name">SEO<span>Lens</span></div>
       </a>
       <div class="nav-links">
-        <a href="#features">Funkcie</a>
-        <a href="#how">Ako to funguje</a>
-        <a href="#compare">Porovnanie</a>
+        <a href="#features" data-i18n="nav_features">Funkcie</a>
+        <a href="#how" data-i18n="nav_how">Ako to funguje</a>
+        <a href="#install" data-i18n="nav_install">Inštalácia</a>
+        <a href="#contact" data-i18n="nav_contact">Kontakt</a>
       </div>
       <a href="seolens.zip" download class="nav-cta">
         <svg viewBox="0 0 16 16" fill="none" width="14" height="14"><path d="M8 2v8M4 7l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Stiahnuť rozšírenie
+        <span data-i18n="nav_download">Stiahnuť rozšírenie</span>
       </a>
+
+      <!-- Language switcher -->
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn" id="langBtn">
+          <span id="langFlag">🇸🇰</span>
+          <span id="langCode">SK</span>
+          <svg viewBox="0 0 10 10" fill="none" width="10" height="10"><path d="M2 3.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+          <button class="lang-option active" data-lang="sk">🇸🇰 Slovenčina</button>
+          <button class="lang-option" data-lang="en">🇬🇧 English</button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -493,7 +603,7 @@ footer {
     <div class="hero-actions">
       <a href="seolens.zip" download class="btn-primary">
         <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Stiahnuť rozšírenie — zadarmo
+        Stiahnuť rozšírenie — Free
       </a>
       <a href="#features" class="btn-ghost">
         Pozrieť funkcie
@@ -519,7 +629,7 @@ footer {
           <div class="mockup-tab">Export</div>
         </div>
         <div class="mockup-body">
-          <div class="mockup-section-title">Meta tagy</div>
+          <div class="mockup-section-title">Meta Tags</div>
           <div class="mockup-row">
             <div class="mockup-icon mi-ok">✓</div>
             <div class="mockup-row-content">
@@ -571,19 +681,19 @@ footer {
     <div class="stats-inner">
       <div class="stat-item">
         <div class="stat-num">14</div>
-        <div class="stat-label">Schema.org typov</div>
+        <div class="stat-label" data-i18n="stat1">Schema.org typov</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">5</div>
-        <div class="stat-label">CWV metrík</div>
+        <div class="stat-label" data-i18n="stat2">CWV metrík</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">30</div>
-        <div class="stat-label">Linkov na kontrolu</div>
+        <div class="stat-label" data-i18n="stat3">Linky skontrolované</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">1×</div>
-        <div class="stat-label">klik — celý audit</div>
+        <div class="stat-label" data-i18n="stat4">klik — celý audit</div>
       </div>
     </div>
   </div>
@@ -595,7 +705,7 @@ footer {
     <div class="reveal">
       <div class="section-eyebrow">Funkcie</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end">
-        <h2 class="section-title">Všetko čo SEO audit potrebuje.</h2>
+        <h2 class="section-title" data-i18n="feat_title">Všetko čo SEO audit potrebuje.</h2>
         <p class="section-sub">Žiadne prepínanie medzi nástrojmi. Všetko na jedno kliknutie, priamo tam kde pracuješ.</p>
       </div>
     </div>
@@ -606,7 +716,7 @@ footer {
         <div class="feature-icon">
           <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="#22c55e" stroke-width="1.5"/><path d="M6 7h8M6 10h5" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
-        <div class="feature-name">Meta tagy & On-page audit</div>
+        <div class="feature-name" data-i18n="f1_name">Meta tagy & On-page audit</div>
         <div class="feature-desc">Title, description, canonical, text/HTML pomer, robots — všetko s farebnými indikátormi a počtom znakov.</div>
         <div class="feature-tag">On-page SEO</div>
       </div>
@@ -615,9 +725,9 @@ footer {
         <div class="feature-icon">
           <svg viewBox="0 0 20 20" fill="none"><path d="M10 2l2.4 4.8 5.3.8-3.85 3.75.9 5.3L10 14.1l-4.75 2.55.9-5.3L2.3 7.6l5.3-.8z" stroke="#22c55e" stroke-width="1.5" stroke-linejoin="round"/></svg>
         </div>
-        <div class="feature-name">Schema.org validácia</div>
+        <div class="feature-name" data-i18n="f2_name">Schema.org validácia</div>
         <div class="feature-desc">14 typov štruktúrovaných dát — Organization, Product, Article, FAQPage a ďalšie. Chýbajúce povinné aj odporúčané vlastnosti.</div>
-        <div class="feature-tag">Štruktúrované dáta</div>
+        <div class="feature-tag" data-i18n="f2_tag">Štruktúrované dáta</div>
       </div>
 
       <div class="feature-card">
@@ -633,7 +743,7 @@ footer {
         <div class="feature-icon">
           <svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="#22c55e" stroke-width="1.5"/></svg>
         </div>
-        <div class="feature-name">Analýza kľúčových slov</div>
+        <div class="feature-name" data-i18n="f4_name">Analýza kľúčových slov</div>
         <div class="feature-desc">Top kľúčové slová, hustota, celkový počet slov. Rýchlo odhalíš over-optimization aj thin content.</div>
         <div class="feature-tag">Content SEO</div>
       </div>
@@ -642,7 +752,7 @@ footer {
         <div class="feature-icon">
           <svg viewBox="0 0 20 20" fill="none"><path d="M10 3C6.13 3 3 6.13 3 10s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" stroke="#22c55e" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
-        <div class="feature-name">Technické súbory</div>
+        <div class="feature-name" data-i18n="f5_name">Technické súbory</div>
         <div class="feature-desc">robots.txt, sitemap.xml, llms.txt, security.txt — existencia, obsah a priamy odkaz na každý súbor.</div>
         <div class="feature-tag">Technical SEO</div>
       </div>
@@ -651,7 +761,7 @@ footer {
         <div class="feature-icon">
           <svg viewBox="0 0 20 20" fill="none"><path d="M4 4h12v12H4z" stroke="#22c55e" stroke-width="1.5" rx="2"/><path d="M4 8h12M8 8v8" stroke="#22c55e" stroke-width="1.5"/></svg>
         </div>
-        <div class="feature-name">PDF report pre klienta</div>
+        <div class="feature-name" data-i18n="f6_name">PDF report pre klienta</div>
         <div class="feature-desc">3-stranový profesionálny report s menom klienta, skóre a odporúčaniami. Generuješ ho za 2 sekundy.</div>
         <div class="feature-tag">Reporting</div>
       </div>
@@ -672,21 +782,21 @@ footer {
           <div class="step">
             <div class="step-num">01</div>
             <div>
-              <div class="step-title">Otvor stránku v Chrome</div>
+              <div class="step-title" data-i18n="step1_title">Otvor stránku v Chrome</div>
               <div class="step-desc">Prejdi na akúkoľvek stránku ktorú chceš auditovať. Rozšírenie je vždy dostupné v toolbare.</div>
             </div>
           </div>
           <div class="step">
             <div class="step-num">02</div>
             <div>
-              <div class="step-title">Klikni na SEOLens</div>
+              <div class="step-title" data-i18n="step2_title">Klikni na SEOLens</div>
               <div class="step-desc">Rozšírenie automaticky analyzuje celú stránku — meta tagy, schema, linky, obrázky, technické súbory.</div>
             </div>
           </div>
           <div class="step">
             <div class="step-num">03</div>
             <div>
-              <div class="step-title">Exportuj report</div>
+              <div class="step-title" data-i18n="step3_title">Exportuj report</div>
               <div class="step-desc">Zadaj meno klienta, vygeneruj 3-stranový PDF report a pošli ho priamo z rozšírenia.</div>
             </div>
           </div>
@@ -718,7 +828,7 @@ footer {
   <div class="container">
     <div class="reveal" style="text-align:center">
       <div class="section-eyebrow">Porovnanie</div>
-      <h2 class="section-title">Prečo SEOLens?</h2>
+      <h2 class="section-title" data-i18n="cmp_title">Prečo SEOLens?</h2>
       <p class="section-sub" style="margin:0 auto">Jediný nástroj ktorý kombinuje schema validáciu, CWV meranie a PDF reporting — bez platobnej brány.</p>
     </div>
 
@@ -726,7 +836,7 @@ footer {
       <table class="comparison-table">
         <thead>
           <tr>
-            <th class="feature-col">Funkcia</th>
+            <th class="feature-col" data-i18n="cmp_feature">Funkcia</th>
             <th class="seolens-col">
               <div class="th-seolens-wrap">
                 SEOLens
@@ -775,7 +885,7 @@ footer {
             <td><span class="check">✓</span></td>
           </tr>
           <tr>
-            <td class="feature-col">Cena</td>
+            <td class="feature-col" data-i18n="cmp_price">Cena</td>
             <td class="seolens-col" style="color:var(--green);font-family:var(--mono);font-weight:700">Zadarmo</td>
             <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)">Zadarmo</td>
             <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)">Zadarmo</td>
@@ -787,13 +897,108 @@ footer {
   </div>
 </section>
 
+<!-- INSTALL GUIDE -->
+<section class="section" id="install" style="background:linear-gradient(180deg,transparent 0%,rgba(34,197,94,0.02) 50%,transparent 100%)">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:56px">
+      <div class="section-eyebrow">Inštalácia</div>
+      <h2 class="section-title">Ako nainštalovať SEOLens</h2>
+      <p class="section-sub" style="margin:0 auto">SEOLens ešte nie je v Chrome Web Store. Nainštaluj ho manuálne za menej ako 60 sekúnd — bez technických znalostí.</p>
+    </div>
+    <div class="install-grid reveal">
+      <div class="install-step">
+        <div class="install-num">1</div>
+        <div class="install-body">
+          <div class="install-title" data-i18n="inst1_title">Stiahni rozšírenie</div>
+          <div class="install-desc">Klikni na tlačidlo nižšie. Dostaneš súbor <code>seolens.zip</code> — ulož ho niekam kde ho nájdeš.</div>
+          <a href="seolens.zip" download class="install-dl-btn">
+            <svg viewBox="0 0 18 18" fill="none" width="16" height="16"><path d="M9 2v10M4 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 16h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Stiahnuť seolens.zip
+          </a>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="install-num">2</div>
+        <div class="install-body">
+          <div class="install-title" data-i18n="inst2_title">Rozbali súbor</div>
+          <div class="install-desc">Klikni pravým tlačidlom na <code>seolens.zip</code> a vyber <strong>Extrahovať všetko</strong> (Windows) alebo dvakrát klikni (macOS). Dostaneš priečinok <code>seolens</code>.</div>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="install-num">3</div>
+        <div class="install-body">
+          <div class="install-title" data-i18n="inst3_title">Otvor Chrome Rozšírenia</div>
+          <div class="install-desc">V Chrome prehliadači otvor <code>chrome://extensions</code> — alebo klikni na tri bodky → <strong>Rozšírenia</strong> → <strong>Spravovať rozšírenia</strong>.</div>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="install-num">4</div>
+        <div class="install-body">
+          <div class="install-title" data-i18n="inst4_title">Zapni Developer Mode</div>
+          <div class="install-desc">V pravom hornom rohu stránky rozšírení zapni <strong>Režim pre vývojárov</strong>. Zobrazia sa nové tlačidlá.</div>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="install-num">5</div>
+        <div class="install-body">
+          <div class="install-title" data-i18n="inst5_title">Načítaj rozšírenie</div>
+          <div class="install-desc">Klikni na <strong>Načítať rozbalené</strong> a vyber priečinok <code>seolens</code> z kroku 2. Hotovo — SEOLens sa objaví v tvojich rozšíreniach.</div>
+        </div>
+      </div>
+      <div class="install-step install-step--done">
+        <div class="install-num" style="background:var(--green);color:#fff;border-color:var(--green)">✓</div>
+        <div class="install-body">
+          <div class="install-title" data-i18n="inst6_title">Pripni do toolbaru</div>
+          <div class="install-desc">Klikni na ikonu puzzle v Chrome toolbare, nájdi SEOLens a klikni na ikonu špendlíka. Teraz ho máš vždy na dosah.</div>
+        </div>
+      </div>
+    </div>
+    <div class="install-note reveal">
+      <svg viewBox="0 0 16 16" fill="none" width="14" height="14"><circle cx="8" cy="8" r="6.5" stroke="#f59e0b" stroke-width="1.4"/><path d="M8 5v3M8 10h.01" stroke="#f59e0b" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Po aktualizácii Chrome môžu byť rozšírenia v Developer Mode automaticky vypnuté. Stačí ich znova zapnúť na stránke rozšírení.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" style="padding-top:0">
+  <div class="container">
+    <div class="contact-box reveal">
+      <div class="contact-left">
+        <div class="section-eyebrow">Kontakt</div>
+        <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Máš otázku?<br data-i18n="contact_title">Napíš mi.</h2>
+        <p class="section-sub" style="font-size:15px">Nahlásenie chyby, návrh funkcie alebo len pozdrav — napíš priamo. Zvyčajne odpisujem do 24 hodín.</p>
+        <a href="mailto:kameniczkilukas@gmail.com" class="contact-email-btn">
+          <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><rect x="2" y="5" width="16" height="12" rx="2" stroke="#22c55e" stroke-width="1.5"/><path d="M2 7l8 5 8-5" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/></svg>
+          kameniczkilukas@gmail.com
+        </a>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-top:12px" data-i18n="contact_dev">Vývojár · Lukáš Kameniczki · Slovensko</div>
+      </div>
+      <div class="contact-right">
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <input type="text" placeholder="Tvoje meno" class="form-input" id="fname" required>
+            <input type="email" placeholder="Tvoj email" class="form-input" id="femail" required>
+          </div>
+          <textarea placeholder="Tvoja správa…" class="form-input form-textarea" id="fmsg" required></textarea>
+          <button type="submit" class="form-btn">
+            <svg viewBox="0 0 18 18" fill="none" width="15" height="15"><path d="M2 9h14M9 3l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Odoslať správu
+          </button>
+          <div id="form-success" style="display:none;font-family:var(--mono);font-size:12px;color:var(--green);margin-top:12px;text-align:center" data-i18n="form_success">✓ Správa odoslaná! Ozvem sa čoskoro.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <div class="container">
     <div class="cta-box reveal">
-      <div class="section-eyebrow" style="margin-bottom:20px">Začni teraz</div>
+      <div class="section-eyebrow" style="margin-bottom:20px" data-i18n="cta_eyebrow">Začni teraz</div>
       <h2 class="cta-title">Stiahni SEOLens.<br>Audit za 10 sekúnd.</h2>
-      <p class="cta-sub">Zadarmo. Žiadna registrácia. Žiadne externé servery.</p>
+      <p class="cta-sub" data-i18n="cta_sub">Zadarmo. Žiadna registrácia. Žiadne externé servery.</p>
       <div class="cta-actions">
         <a href="seolens.zip" download class="btn-primary" style="font-size:16px;padding:16px 32px">
           <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M10 3v10M5 9l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 17h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -813,9 +1018,9 @@ footer {
     <div class="footer-inner">
       <div class="footer-logo">SEO<span>Lens</span></div>
       <div class="footer-links">
-        <a href="#">Ochrana súkromia</a>
-        <a href="#">Podmienky</a>
-        <a href="#">Kontakt</a>
+        <a href="#" data-i18n="footer_privacy">Ochrana súkromia</a>
+        <a href="#" data-i18n="footer_terms">Podmienky</a>
+        <a href="mailto:kameniczkilukas@gmail.com">Kontakt</a>
       </div>
       <div class="footer-copy">© 2026 SEOLens · Lukáš Kameniczki</div>
     </div>
@@ -823,7 +1028,151 @@ footer {
 </footer>
 
 <script>
-// Nav scroll
+// ── i18n ──────────────────────────────────────────────────────────────────
+var i18n = {
+  sk: {
+    nav_features: 'Funkcie', nav_how: 'Ako to funguje', nav_install: 'Inštalácia',
+    nav_contact: 'Kontakt', nav_download: 'Stiahnuť rozšírenie',
+    hero_badge_pre: 'Chrome rozšírenie · ',
+    hero_title: 'SEO audit.<br><span class="line2">Priamo v <span class="accent">prehliadači.</span></span>',
+    hero_sub: 'Kompletný SEO audit, Schema.org validácia pre 14 typov, analýza kľúčových slov a Core Web Vitals — bez opustenia stránky.',
+    hero_btn_primary: 'Stiahnuť rozšírenie — zadarmo', hero_btn_ghost: 'Pozrieť funkcie',
+    stat1: 'Schema.org typov', stat2: 'CWV metrík', stat3: 'Linky skontrolované', stat4: 'klik — celý audit',
+    feat_eyebrow: 'Funkcie', feat_title: 'Všetko čo SEO audit potrebuje.',
+    feat_sub: 'Žiadne prepínanie medzi nástrojmi. Všetko na jedno kliknutie, priamo tam kde pracuješ.',
+    f1_name: 'Meta tagy & On-page audit', f1_desc: 'Title, description, canonical, text/HTML pomer, robots — všetko s farebnými indikátormi a počtom znakov.', f1_tag: 'On-page SEO',
+    f2_name: 'Schema.org validácia', f2_desc: '14 typov štruktúrovaných dát — Organization, Product, Article, FAQPage a ďalšie. Chýbajúce povinné aj odporúčané vlastnosti.', f2_tag: 'Štruktúrované dáta',
+    f3_name: 'Core Web Vitals', f3_desc: 'LCP, FCP, TTFB, CLS, FID — reálne hodnoty cez Performance Observer API. Meranie spustíš jedným kliknutím.', f3_tag: 'Performance',
+    f4_name: 'Analýza kľúčových slov', f4_desc: 'Top kľúčové slová, hustota, celkový počet slov. Rýchlo odhalíš over-optimization aj thin content.', f4_tag: 'Content SEO',
+    f5_name: 'Technické súbory', f5_desc: 'robots.txt, sitemap.xml, llms.txt, security.txt — existencia, obsah a priamy odkaz na každý súbor.', f5_tag: 'Technical SEO',
+    f6_name: 'PDF report pre klienta', f6_desc: '3-stranový profesionálny report s menom klienta, skóre a odporúčaniami. Generuješ ho za 2 sekundy.', f6_tag: 'Reporting',
+    how_eyebrow: 'Ako to funguje', how_title: 'Tri kroky.<br>Celý audit.',
+    how_sub: 'Navrhnuté pre SEO konzultantov ktorí si nemôžu dovoliť strácať čas.',
+    step1_title: 'Otvor stránku v Chrome', step1_desc: 'Prejdi na akúkoľvek stránku ktorú chceš auditovať. Rozšírenie je vždy dostupné v toolbare.',
+    step2_title: 'Klikni na SEOLens', step2_desc: 'Rozšírenie automaticky analyzuje celú stránku — meta tagy, schema, linky, obrázky, technické súbory.',
+    step3_title: 'Exportuj report', step3_desc: 'Zadaj meno klienta, vygeneruj 3-stranový PDF report a pošli ho priamo z rozšírenia.',
+    cmp_eyebrow: 'Porovnanie', cmp_title: 'Prečo SEOLens?',
+    cmp_sub: 'Jediný nástroj ktorý kombinuje schema validáciu, CWV meranie a PDF reporting — bez platobnej brány.',
+    cmp_feature: 'Funkcia', cmp_price: 'Cena', cmp_free: 'Zadarmo',
+    cmp_f1: 'Meta tagy & On-page audit', cmp_f2: 'Schema.org validácia (14 typov)',
+    cmp_f3: 'Analýza kľúčových slov', cmp_f4: 'Core Web Vitals meranie', cmp_f5: 'PDF report pre klienta',
+    inst_eyebrow: 'Inštalácia', inst_title: 'Ako nainštalovať SEOLens',
+    inst_sub: 'SEOLens ešte nie je v Chrome Web Store. Nainštaluj ho manuálne za menej ako 60 sekúnd — bez technických znalostí.',
+    inst1_title: 'Stiahni rozšírenie', inst1_desc: 'Klikni na tlačidlo nižšie. Dostaneš súbor <code>seolens.zip</code> — ulož ho niekam kde ho nájdeš.',
+    inst1_btn: 'Stiahnuť seolens.zip',
+    inst2_title: 'Rozbali súbor', inst2_desc: 'Klikni pravým tlačidlom na <code>seolens.zip</code> a vyber <strong>Extrahovať všetko</strong> (Windows) alebo dvakrát klikni (macOS). Dostaneš priečinok <code>seolens</code>.',
+    inst3_title: 'Otvor Chrome Rozšírenia', inst3_desc: 'V Chrome prehliadači otvor <code>chrome://extensions</code> — alebo klikni na tri bodky → <strong>Rozšírenia</strong> → <strong>Spravovať rozšírenia</strong>.',
+    inst4_title: 'Zapni Developer Mode', inst4_desc: 'V pravom hornom rohu stránky rozšírení zapni <strong>Režim pre vývojárov</strong>. Zobrazia sa nové tlačidlá.',
+    inst5_title: 'Načítaj rozšírenie', inst5_desc: 'Klikni na <strong>Načítať rozbalené</strong> a vyber priečinok <code>seolens</code> z kroku 2. Hotovo — SEOLens sa objaví v tvojich rozšíreniach.',
+    inst6_title: 'Pripni do toolbaru', inst6_desc: 'Klikni na ikonu puzzle v Chrome toolbare, nájdi SEOLens a klikni na ikonu špendlíka. Teraz ho máš vždy na dosah.',
+    inst_note: 'Po aktualizácii Chrome môžu byť rozšírenia v Developer Mode automaticky vypnuté. Stačí ich znova zapnúť na stránke rozšírení.',
+    contact_eyebrow: 'Kontakt', contact_title: 'Máš otázku?<br>Napíš mi.',
+    contact_sub: 'Nahlásenie chyby, návrh funkcie alebo len pozdrav — napíš priamo. Zvyčajne odpisujem do 24 hodín.',
+    contact_dev: 'Vývojár · Lukáš Kameniczki · Slovensko',
+    form_name: 'Tvoje meno', form_email: 'Tvoj email', form_msg: 'Tvoja správa…',
+    form_btn: 'Odoslať správu', form_success: '✓ Správa odoslaná! Ozvem sa čoskoro.',
+    cta_eyebrow: 'Začni teraz', cta_title: 'Stiahni SEOLens.<br>Audit za 10 sekúnd.',
+    cta_sub: 'Zadarmo. Žiadna registrácia. Žiadne externé servery.',
+    cta_btn: 'Stiahnuť rozšírenie',
+    cta_note_1: 'Chrome Manifest v3', cta_note_2: 'Funguje offline · Dáta ostávajú u teba',
+    footer_privacy: 'Ochrana súkromia', footer_terms: 'Podmienky', footer_contact: 'Kontakt',
+  },
+  en: {
+    nav_features: 'Features', nav_how: 'How it works', nav_install: 'Install',
+    nav_contact: 'Contact', nav_download: 'Download Extension',
+    hero_badge_pre: 'Chrome Extension · ',
+    hero_title: 'SEO audit.<br><span class="line2">Right in your <span class="accent">browser.</span></span>',
+    hero_sub: 'Full SEO audit, Schema.org validation for 14 types, keyword analysis and Core Web Vitals — without leaving the page.',
+    hero_btn_primary: 'Download Extension — Free', hero_btn_ghost: 'See features',
+    stat1: 'Schema.org types', stat2: 'CWV metrics', stat3: 'Links checked', stat4: 'click — full audit',
+    feat_eyebrow: 'Features', feat_title: 'Everything an SEO audit needs.',
+    feat_sub: 'No switching between tools. Everything one click away, right where you work.',
+    f1_name: 'Meta Tags & On-page Audit', f1_desc: 'Title, description, canonical, text/HTML ratio, robots — all with colour indicators and character counts.', f1_tag: 'On-page SEO',
+    f2_name: 'Schema.org Validation', f2_desc: '14 structured data types — Organization, Product, Article, FAQPage and more. Flags missing required and recommended properties.', f2_tag: 'Structured Data',
+    f3_name: 'Core Web Vitals', f3_desc: 'LCP, FCP, TTFB, CLS, FID — real values via Performance Observer API. Run the test with a single click.', f3_tag: 'Performance',
+    f4_name: 'Keyword Analysis', f4_desc: 'Top keywords, density, total word count. Quickly spot over-optimisation and thin content.', f4_tag: 'Content SEO',
+    f5_name: 'Technical Files', f5_desc: 'robots.txt, sitemap.xml, llms.txt, security.txt — existence, content preview and a direct link to each file.', f5_tag: 'Technical SEO',
+    f6_name: 'Client PDF Report', f6_desc: 'A 3-page professional report with client name, score and recommendations. Generated in 2 seconds.', f6_tag: 'Reporting',
+    how_eyebrow: 'How it works', how_title: 'Three steps.<br>Full audit.',
+    how_sub: 'Built for SEO consultants who cannot afford to waste time.',
+    step1_title: 'Open any page in Chrome', step1_desc: 'Navigate to any page you want to audit. The extension is always one click away in the toolbar.',
+    step2_title: 'Click SEOLens', step2_desc: 'The extension automatically analyses the whole page — meta tags, schema, links, images, technical files.',
+    step3_title: 'Export the report', step3_desc: 'Enter the client name, generate a 3-page PDF report and send it straight from the extension.',
+    cmp_eyebrow: 'Comparison', cmp_title: 'Why SEOLens?',
+    cmp_sub: 'The only tool combining schema validation, CWV measurement and PDF reporting — with no paywall.',
+    cmp_feature: 'Feature', cmp_price: 'Price', cmp_free: 'Free',
+    cmp_f1: 'Meta Tags & On-page Audit', cmp_f2: 'Schema.org Validation (14 types)',
+    cmp_f3: 'Keyword Analysis', cmp_f4: 'Core Web Vitals Measurement', cmp_f5: 'Client PDF Report',
+    inst_eyebrow: 'Installation', inst_title: 'How to install SEOLens',
+    inst_sub: 'SEOLens is not yet on the Chrome Web Store. Install it manually in under 60 seconds — no technical knowledge needed.',
+    inst1_title: 'Download the extension', inst1_desc: 'Click the download button below. You\'ll get a <code>seolens.zip</code> file — save it somewhere you\'ll find it easily.',
+    inst1_btn: 'Download seolens.zip',
+    inst2_title: 'Unzip the file', inst2_desc: 'Right-click <code>seolens.zip</code> and choose <strong>Extract All</strong> (Windows) or double-click (macOS). You\'ll get a folder called <code>seolens</code>.',
+    inst3_title: 'Open Chrome Extensions', inst3_desc: 'In your Chrome browser, go to <code>chrome://extensions</code> — or click the three-dot menu → <strong>Extensions</strong> → <strong>Manage Extensions</strong>.',
+    inst4_title: 'Enable Developer Mode', inst4_desc: 'In the top-right corner of the Extensions page, toggle <strong>Developer mode</strong> on. A new row of buttons will appear.',
+    inst5_title: 'Load the extension', inst5_desc: 'Click <strong>Load unpacked</strong> and select the <code>seolens</code> folder you extracted in step 2. That\'s it — SEOLens will appear in your extensions.',
+    inst6_title: 'Pin it to your toolbar', inst6_desc: 'Click the puzzle-piece icon in Chrome\'s toolbar, find SEOLens and click the pin icon. Now it\'s always one click away on any page.',
+    inst_note: 'After a Chrome update, Developer Mode extensions may be disabled automatically. Just re-enable them on the Extensions page.',
+    contact_eyebrow: 'Contact', contact_title: 'Got a question?<br>Get in touch.',
+    contact_sub: 'Bug report, feature request or just want to say hi — reach out directly. Usually reply within 24 hours.',
+    contact_dev: 'Developer · Lukáš Kameniczki · Slovakia',
+    form_name: 'Your name', form_email: 'Your email', form_msg: 'Your message…',
+    form_btn: 'Send message', form_success: '✓ Message sent! I\'ll get back to you soon.',
+    cta_eyebrow: 'Get started', cta_title: 'Download SEOLens.<br>Audit in 10 seconds.',
+    cta_sub: 'Free. No sign-up. No external servers.',
+    cta_btn: 'Download Extension',
+    cta_note_1: 'Chrome Manifest v3', cta_note_2: 'Works offline · Your data stays with you',
+    footer_privacy: 'Privacy', footer_terms: 'Terms', footer_contact: 'Contact',
+  }
+};
+
+var currentLang = 'sk';
+
+function applyLang(lang) {
+  var t = i18n[lang];
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  function setText(sel, key) {
+    var els = document.querySelectorAll('[data-i18n="' + key + '"]');
+    els.forEach(function(el) { el.innerHTML = t[key]; });
+  }
+  function setPlaceholder(sel, val) {
+    var el = document.querySelector(sel);
+    if (el) el.placeholder = val;
+  }
+
+  // Apply all keys
+  Object.keys(t).forEach(function(key) { setText('[data-i18n]', key); });
+  // Placeholders
+  setPlaceholder('#fname', t.form_name);
+  setPlaceholder('#femail', t.form_email);
+  setPlaceholder('#fmsg', t.form_msg);
+
+  // Flag & code
+  document.getElementById('langFlag').textContent = lang === 'sk' ? '🇸🇰' : '🇬🇧';
+  document.getElementById('langCode').textContent = lang.toUpperCase();
+
+  // Active state
+  document.querySelectorAll('.lang-option').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+// Switcher toggle
+var langBtn = document.getElementById('langBtn');
+var langDropdown = document.getElementById('langDropdown');
+langBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  langDropdown.classList.toggle('open');
+});
+document.addEventListener('click', function() { langDropdown.classList.remove('open'); });
+document.querySelectorAll('.lang-option').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    applyLang(btn.dataset.lang);
+    langDropdown.classList.remove('open');
+  });
+});
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
   nav.classList.toggle('scrolled', window.scrollY > 40);
@@ -855,6 +1204,22 @@ document.getElementById('sdChips').addEventListener('click', function(e) {
   drawer.innerHTML = '<div class="sd-drawer-label">' + data.label + '</div>' +
     data.items.map(function(i) { return '<div class="sd-item ' + i.cls + '">' + i.txt + '</div>'; }).join('');
 });
+
+// Contact form — mailto fallback
+var form = document.getElementById('contactForm');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name  = document.getElementById('fname').value;
+    var email = document.getElementById('femail').value;
+    var msg   = document.getElementById('fmsg').value;
+    var subject = encodeURIComponent('SEOLens — správa od ' + name);
+    var body    = encodeURIComponent(msg + '\n\nFrom: ' + name + ' <' + email + '>');
+    window.location.href = 'mailto:kameniczkilukas@gmail.com?subject=' + subject + '&body=' + body;
+    document.getElementById('form-success').style.display = 'block';
+    form.reset();
+  });
+}
 
 // Stagger feature cards
 document.querySelectorAll('.feature-card').forEach(function(el, i) {
