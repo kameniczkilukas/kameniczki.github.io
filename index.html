@@ -587,7 +587,7 @@ footer {
 
     <div class="hero-badge">
       <div class="hero-badge-dot"></div>
-      <span>Chrome rozšírenie · </span>
+      <span data-i18n="hero_badge_pre">Chrome rozšírenie · </span>
       <strong>Manifest v3</strong>
     </div>
 
@@ -886,9 +886,9 @@ footer {
           </tr>
           <tr>
             <td class="feature-col" data-i18n="cmp_price">Cena</td>
-            <td class="seolens-col" style="color:var(--green);font-family:var(--mono);font-weight:700" data-i18n="cmp_free">Zadarmo</td>
-            <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)">Zadarmo</td>
-            <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)">Zadarmo</td>
+            <td class="seolens-col" style="color:var(--green);font-family:var(--mono);font-weight:700" data-i18n="cmp_free" data-i18n="cmp_free">Zadarmo</td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)" data-i18n="cmp_free">Zadarmo</td>
+            <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)" data-i18n="cmp_free">Zadarmo</td>
             <td style="font-family:var(--mono);font-size:12px;color:var(--text-mid)">$19.99/mes</td>
           </tr>
         </tbody>
@@ -1006,7 +1006,7 @@ footer {
         </a>
       </div>
       <div class="cta-note">
-        <span>Chrome Manifest v3</span> · Funguje offline · Dáta ostávajú u teba
+        <span data-i18n="cta_note_1">Chrome Manifest v3</span> · <span data-i18n="cta_note_2">Funguje offline · Dáta ostávajú u teba</span>
       </div>
     </div>
   </div>
@@ -1055,7 +1055,7 @@ var i18n = {
     cmp_sub: 'Jediný nástroj ktorý kombinuje schema validáciu, CWV meranie a PDF reporting — bez platobnej brány.',
     cmp_feature: 'Funkcia', cmp_price: 'Cena', cmp_free: 'Zadarmo',
     cmp_f1: 'Meta tagy & On-page audit', cmp_f2: 'Schema.org validácia (14 typov)',
-    cmp_f3: 'Analýza kľúčových slov', cmp_f4: 'Core Web Vitals meranie', cmp_f5: 'PDF report pre klienta',
+    cmp_f3: 'Analýza kľúčových slov', cmp_f4: 'Core Web Vitals meranie', cmp_f5: 'PDF report pre klienta', cmp_our: 'náš produkt',
     inst_eyebrow: 'Inštalácia', inst_title: 'Ako nainštalovať SEOLens',
     inst_sub: 'SEOLens ešte nie je v Chrome Web Store. Nainštaluj ho manuálne za menej ako 60 sekúnd — bez technických znalostí.',
     inst1_title: 'Stiahni rozšírenie', inst1_desc: 'Klikni na tlačidlo nižšie. Dostaneš súbor <code>seolens.zip</code> — ulož ho niekam kde ho nájdeš.',
@@ -1102,7 +1102,7 @@ var i18n = {
     cmp_sub: 'The only tool combining schema validation, CWV measurement and PDF reporting — with no paywall.',
     cmp_feature: 'Feature', cmp_price: 'Price', cmp_free: 'Free',
     cmp_f1: 'Meta Tags & On-page Audit', cmp_f2: 'Schema.org Validation (14 types)',
-    cmp_f3: 'Keyword Analysis', cmp_f4: 'Core Web Vitals Measurement', cmp_f5: 'Client PDF Report',
+    cmp_f3: 'Keyword Analysis', cmp_f4: 'Core Web Vitals Measurement', cmp_f5: 'Client PDF Report', cmp_our: 'our product',
     inst_eyebrow: 'Installation', inst_title: 'How to install SEOLens',
     inst_sub: 'SEOLens is not yet on the Chrome Web Store. Install it manually in under 60 seconds — no technical knowledge needed.',
     inst1_title: 'Download the extension', inst1_desc: 'Click the download button below. You\'ll get a <code>seolens.zip</code> file — save it somewhere you\'ll find it easily.',
@@ -1157,6 +1157,12 @@ function applyLang(lang) {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
 
+  // Update schema demo drawer data
+  drawerData = drawerDataLangs[lang];
+  // Reset drawer to avoid stale lang content
+  var sdDrawer = document.getElementById('sdDrawer');
+  if (sdDrawer) sdDrawer.innerHTML = '';
+
   // Page title
   document.title = lang === 'sk'
     ? 'SEOLens — SEO audit priamo v Chrome'
@@ -1192,12 +1198,21 @@ var observer = new IntersectionObserver(function(entries) {
 reveals.forEach(function(el) { observer.observe(el); });
 
 // Schema demo interaction
-var drawerData = {
-  ok:   { label: 'Organization', items: [{ cls: 'ok', txt: '✓ Schema je validná — všetky vlastnosti sú prítomné' }] },
-  ok2:  { label: 'WebSite', items: [{ cls: 'ok', txt: '✓ name, url — všetko v poriadku' }, { cls: 'warn', txt: '⚠ Odporúčaná: potentialAction (SearchAction)' }] },
-  warn: { label: 'Product', items: [{ cls: 'warn', txt: '⚠ offers: chýba cena (price/priceRange)' }, { cls: 'warn', txt: '⚠ offers: chýba availability' }, { cls: 'warn', txt: '⚠ Odporúčaná: aggregateRating' }] },
-  err:  { label: 'Article', items: [{ cls: 'err', txt: '✕ Chýba povinná vlastnosť: author' }, { cls: 'err', txt: '✕ Chýba povinná vlastnosť: datePublished' }, { cls: 'warn', txt: '⚠ Odporúčaná: image' }] },
+var drawerDataLangs = {
+  sk: {
+    ok:   { label: 'Organization', items: [{ cls: 'ok', txt: '✓ Schema je validná — všetky vlastnosti sú prítomné' }] },
+    ok2:  { label: 'WebSite', items: [{ cls: 'ok', txt: '✓ name, url — všetko v poriadku' }, { cls: 'warn', txt: '⚠ Odporúčaná: potentialAction (SearchAction)' }] },
+    warn: { label: 'Product', items: [{ cls: 'warn', txt: '⚠ offers: chýba cena (price/priceRange)' }, { cls: 'warn', txt: '⚠ offers: chýba availability' }, { cls: 'warn', txt: '⚠ Odporúčaná: aggregateRating' }] },
+    err:  { label: 'Article', items: [{ cls: 'err', txt: '✕ Chýba povinná vlastnosť: author' }, { cls: 'err', txt: '✕ Chýba povinná vlastnosť: datePublished' }, { cls: 'warn', txt: '⚠ Odporúčaná: image' }] },
+  },
+  en: {
+    ok:   { label: 'Organization', items: [{ cls: 'ok', txt: '✓ Schema is valid — all properties present' }] },
+    ok2:  { label: 'WebSite', items: [{ cls: 'ok', txt: '✓ name, url — all good' }, { cls: 'warn', txt: '⚠ Recommended: potentialAction (SearchAction)' }] },
+    warn: { label: 'Product', items: [{ cls: 'warn', txt: '⚠ offers: missing price (price/priceRange)' }, { cls: 'warn', txt: '⚠ offers: missing availability' }, { cls: 'warn', txt: '⚠ Recommended: aggregateRating' }] },
+    err:  { label: 'Article', items: [{ cls: 'err', txt: '✕ Missing required property: author' }, { cls: 'err', txt: '✕ Missing required property: datePublished' }, { cls: 'warn', txt: '⚠ Recommended: image' }] },
+  }
 };
+var drawerData = drawerDataLangs['sk'];
 document.getElementById('sdChips').addEventListener('click', function(e) {
   var chip = e.target.closest('.sd-chip');
   if (!chip) return;
